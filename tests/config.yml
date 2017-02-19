@@ -48,7 +48,7 @@ homebrew_cask_apps:
 mas_email: ""
 mas_password: ""
 mas_installed_app_ids: [] # Don't use this option
-mas_installed_apps:es
+mas_installed_apps:
   - { id: 497799835, name: "Xcode (8.1)" }
 
 mas_upgrade_all_apps: no
