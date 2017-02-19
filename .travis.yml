@@ -27,7 +27,7 @@ install:
 
 script:
   # Basic role syntax check
-  - ansible-galaxy install -r requirements.yml
+  - ansible-galaxy install Shashikant86.iOS-Dev
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
   - ansible-playbook -v tests/test.yml -i tests/inventory -K
 
