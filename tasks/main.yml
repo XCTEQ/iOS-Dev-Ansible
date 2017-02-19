@@ -13,13 +13,12 @@
   include: xcode-install.yml
   when: configure_xcode
 
-- name: Install Xcode Command Line Tools
-  include: xcode-cli-tools.yml
-  when: configure_xcode
-
 - name: Install Xcode Simulators
   include: xcode-simulators.yml
   when: configure_xcode
+
+- name: Install Xcode Command Line Tools
+  include: macos-commandline-tools.yml
 
 - name: Run Ruby Tasks to set RVM and Rubygems
   include: ruby-setup.yml

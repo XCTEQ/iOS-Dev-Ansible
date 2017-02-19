@@ -1,10 +1,7 @@
 ---
+homebrew_repo: https://github.com/Homebrew/brew
 
-homebrew_install_path: /usr/local/homebrew
+homebrew_prefix: /usr/local
+homebrew_brew_bin_path: /usr/local/bin
 
-homebrew_taps:
-  - homebrew/core
-  - caskroom/cask
-  - homebrew/binary
-  - homebrew/dupes
-  - homebrew/versions
+homebrew_cask_appdir: /Applications

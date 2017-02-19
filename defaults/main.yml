@@ -28,6 +28,9 @@ macos_software_autoupdates:
   - softwareupdate --schedule off
 
 
+homebrew_use_brewfile: true
+homebrew_brewfile_dir: '~'
+
 list_homebrew_packages_to_install:
   - autoconf
   - bash-completion
