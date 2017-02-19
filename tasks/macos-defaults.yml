@@ -1,0 +1,25 @@
+---
+- name: Enable Developer Tools and Never Sleep Mode
+  shell: "{{ item }}"
+  with_items:
+    - DevToolsSecurity -enable
+    - systemsetup -setsleep Never
+    - systemsetup -setharddisksleep Never
+    - systemsetup -setcomputersleep Never
+    - systemsetup -setdisplaysleep Never
+  changed_when: false
+
+- name: Setup macOS Sleep Mode
+  shell: "{{ item }}"
+  with_items: "{{ macos_sleep_options }}"
+  changed_when: false
+
+- name: Ensure that animations are disabled
+  shell: "{{ item }}"
+  with_items: "{{ macos_animation_options }}"
+  changed_when: false
+
+- name: Software Updates
+  shell: "{{ item }}"
+  with_items: "{{ macos_software_autoupdates }}"
+  changed_when: false

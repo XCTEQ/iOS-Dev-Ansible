@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: shashikant86
+  description: Fully automated and customised macOS setup for iOS development & CI
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.2
+  platforms:
+    - name: MacOSX
+      versions:
+        - all
+        - any
+  galaxy_tags:
+    - ios
+    - ci
+    - swift

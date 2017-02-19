@@ -1,0 +1,14 @@
+---
+- name: Install Homebrew
+  command: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  args:
+    creates: /usr/local/bin/brew
+  when: ansible_os_family == "Darwin"
+
+- name: Homebrew tap configured items
+  homebrew_tap: "tap={{ item }} state=present"
+  with_items: "{{ homebrew_taps }}"
+
+- name: Install all the configured packages
+  homebrew: "name={{ item }} state=present"
+  with_items: "{{ homebrew_installed_packages }}"

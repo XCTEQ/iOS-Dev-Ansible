@@ -1,0 +1,9 @@
+---
+- name: Copy Xcode Command Line Tools Script
+  copy: src=clitools.sh dest=/tmp/clitools.sh
+
+- name: Install Xcode Command Line Tools
+  command: bash -c "sh /tmp/clitools.sh"
+
+- name: Delete copied Scripts for CLI tools
+  command: bash -c "rm -rf /tmp/clitools.sh"

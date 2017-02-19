@@ -1,0 +1,6 @@
+---
+- name: Install Xcode from XIP file Location
+  command: bash -c 'open -FWga "Archive Utility" --args ~/Documents/{{ xcode_xip }}'
+
+- name: Move Xcode To Application
+  command: bash -c 'mv ~/Documents/Xcode*.app ~/Applications/'

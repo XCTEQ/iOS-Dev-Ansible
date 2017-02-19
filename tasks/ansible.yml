@@ -1,0 +1,6 @@
+---
+- name: Ensure /etc/ansible directory exists.
+  file:
+    path: /etc/ansible
+    state: directory
+  become: yes

@@ -1,0 +1,54 @@
+---
+
+configure_xcode: no
+configure_custom_swift: yes
+configure_masos_defaults: yes
+configure_ruby_rvm: yes
+homebrew_upgrade_all_packages: no
+use_mac_store: no
+
+ruby_version: 2.4.0
+
+swift_version_custom: 3.0.1
+
+macos_sleep_options:
+  - systemsetup -setsleep Never
+
+macos_animation_options:
+  - defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
+
+macos_software_autoupdates:
+  - softwareupdate --schedule off
+
+homebrew_installed_packages:
+  - autoconf
+  - bash-completion
+  - git
+  - carthage
+  - gpg
+  - boost
+  - cmake
+  - ssh-copy-id
+  - openssl
+  - wget
+  - curl
+  - argon/mas/mas
+  - kylef/formulae/swiftenv
+
+homebrew_taps:
+  - homebrew/core
+  - caskroom/cask
+  - homebrew/binary
+  - homebrew/dupes
+  - homebrew/versions
+
+homebrew_cask_apps:
+  - java
+
+mas_email: ""
+mas_password: ""
+mas_installed_app_ids: [] # Don't use this option
+mas_installed_apps:es
+  - { id: 497799835, name: "Xcode (8.1)" }
+
+mas_upgrade_all_apps: no

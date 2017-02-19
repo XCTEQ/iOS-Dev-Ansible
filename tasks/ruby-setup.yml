@@ -1,0 +1,25 @@
+---
+- name: Install RVM for the user
+  command: bash -c "\curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles"
+
+- name: Add RVM to the users bash profile
+  command: bash -c 'echo "source $HOME/.rvm/scripts/rvm" >> ~/.bash_profile'
+
+- name: Install ruby version
+  command: rvm install {{ ruby_version }}
+
+- name: Set Ruby Default
+  command: rvm default {{ ruby_version }}
+
+- name: Setup Installed Ruby
+  command: bash -c 'echo "rvm default {{ ruby_version }} " >> ~/.bash_profile'
+
+- name: Install Ruby Gems required for iOS app developement
+  gem: name={{item}} state=latest
+  with_items:
+   - bundler
+   - rake
+   - cocoapods
+   - fastlane
+   - xcov
+   - xcpretty

@@ -1,0 +1,9 @@
+---
+- name: Copy Xcode Simulators Script
+  copy: src=download-simulator.sh dest=/tmp/download-simulator.sh
+
+- name: Install Xcode Simulators
+  command: bash -c "sh /tmp/download-simulator.sh"
+
+- name: Delete copied Scripts
+  command: bash -c "rm -rf /tmp/download-simulator.sh"

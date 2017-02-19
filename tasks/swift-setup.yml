@@ -1,0 +1,24 @@
+---
+- name: Copy SwitEnv Script
+  copy: src=swiftenv.sh dest=/tmp/swiftenv.sh
+
+- name: Install SwitEnv Tools
+  command: bash -c "sh /tmp/swiftenv.sh"
+
+- name: Delete copied Scripts for SwitEnv
+  command: bash -c "rm -rf /tmp/swiftenv.sh"
+
+# - name: Configure Bash for custom Swift
+#   command: bash -c 'echo "if which swiftenv > /dev/null; then eval "$(swiftenv init -)"; fi' >> ~/.bash_profile"'
+
+- name: Install Custom Swift
+  command: swiftenv install {{ swift_version_custom  }}
+
+- name: Rehash Swift
+  command: swiftenv rehash
+
+- name: Change Swift Globally
+  command: swiftenv global {{ swift_version_custom  }}
+
+- name: Print New Swift Version
+  command: swiftenv which swift

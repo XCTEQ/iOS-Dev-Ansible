@@ -1,0 +1,15 @@
+---
+- hosts: all
+  connection: local
+  remote_user: root
+
+  vars_files:
+    - config.yml
+
+  pre_tasks:
+    - include_vars: "{{ item }}"
+      with_fileglob:
+        - ../config.yml
+
+  roles:
+    - shashikant86.ios-dev

@@ -1,0 +1,38 @@
+---
+sudo: required
+language: objective-c
+osx_image: xcode7.3
+
+before_install:
+  - rm -rf /usr/local/Homebrew
+  - rm -rf /usr/local/Caskroom
+  - rm -rf /usr/local/bin/brew
+
+install:
+  # Install pip.
+  - sudo easy_install pip
+  # Install ansible
+  - sudo pip install ansible
+
+  # Check ansible version
+  - ansible --version
+
+  # Create ansible.cfg with correct roles_path
+  - printf '[defaults]\nroles_path=../' >ansible.cfg
+
+  # Add a hosts file.
+  - sudo mkdir -p /etc/ansible
+  - sudo touch /etc/ansible/hosts
+  - "echo -e '[local]\nlocalhost ansible_connection=local' | sudo tee -a /etc/ansible/hosts > /dev/null"
+
+script:
+  # Basic role syntax check
+  - ansible-galaxy install -r requirements.yml
+  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+  - ansible-playbook -v tests/test.yml -i tests/inventory -K
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+  email:
+    on_success: never
+    on_failure: never
