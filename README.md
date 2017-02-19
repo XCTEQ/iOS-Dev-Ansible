@@ -89,7 +89,7 @@ Imagine, you have fresh Mac with fresh macOS installed. You can setup all your i
 
 Assuming you have installed Ansible, we can download the role by running command
 
-           $ $ ansible-galaxy install shashikant86.ios-dev
+           $ $ ansible-galaxy install Shashikant86.iOS-Dev
 
 Now that, we have to create our own playbook for this role by setting values in the `config.yml` files. We can use `defaults/main.tml` file [here](https://github.com/Shashikant86/ansible-ios-ci/blob/master/defaults/main.yml) then we can create a playbook to use this file as configuration. The example playbook looks like this
 
@@ -117,7 +117,7 @@ Assuming that we have `config.yml` file at the same location as `playbook.yml` f
         - ../config.yml
 
   roles:
-    - Shashikant86.ios-dev
+    - Shashikant86.iOS-Dev
 
 ```
 

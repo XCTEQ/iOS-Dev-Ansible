@@ -12,4 +12,4 @@
         - ../config.yml
 
   roles:
-    - shashikant86.ios-dev
+    - Shashikant86.iOS-Dev
