@@ -1,0 +1,45 @@
+---
+- name: test whether xcode was uploaded earlier
+  stat: path=/Users/{{ ansible_ssh_user }}/{{ xcode_dmg }}
+  register: xcode_dl_path
+
+- name: upload xcode dmg
+  copy: src={{ xcode_dmg }} dest=/Users/{{ ansible_ssh_user }}
+  when: xcode_dl_path.stat.exists == False
+
+- name: mount xcode dmg
+  command: hdiutil attach /Users/{{ ansible_ssh_user }}/{{ xcode_dmg }}
+  args:
+    creates: /Volumes/Xcode/
+
+- name: install xcode
+  command: cp -a /Volumes/Xcode/Xcode.app /Applications/
+  args:
+    creates: /Applications/Xcode.app/
+
+- name: unmount xcode dmg
+  command: hdiutil detach /Volumes/Xcode
+  args:
+    removes: /Volumes/Xcode/
+
+- name: accept license agreement
+  command: /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -license accept
+  become: yes
+  become_method: sudo
+
+- name: install additional components
+  command: installer -pkg /Applications/Xcode.app/Contents/Resources/Packages/MobileDeviceDevelopment.pkg -target /
+  become: yes
+  become_method: sudo
+
+- name: check on the status of developer mode
+  command: DevToolsSecurity -status
+  become: yes
+  become_method: sudo
+  register: dev_tools_security_status
+
+- name: enable developer mode
+  command: DevToolsSecurity -enable
+  become: yes
+  become_method: sudo
+  when: "'disabled' in dev_tools_security_status.stdout"

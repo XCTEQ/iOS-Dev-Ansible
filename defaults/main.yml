@@ -1,11 +1,15 @@
 ---
 
-configure_xcode: no
+configure_xcode_documents_dir: no
+configure_xcode_playbook_files: no
 configure_custom_swift: yes
 configure_masos_defaults: no
 configure_ruby_rvm: yes
 homebrew_upgrade_all_packages: no
 use_mac_store: no
+
+xcode_major_version: 8.2
+xcode_src: Xcode_8.2.xip
 
 ruby_version: 2.4.0
 

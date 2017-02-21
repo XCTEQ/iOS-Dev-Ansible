@@ -9,13 +9,17 @@
   include: mac-app-store.yml
   when: use_mac_store
 
+- name: Install Xcode by Placing DMG/XIP inside files dorectoty
+  include: "xcode_{{ xcode_major_version }}.yml"
+  when: configure_xcode_playbook_files
+
 - name: Install Xcode from ~/Documents directory
   include: xcode-install.yml
-  when: configure_xcode
+  when: configure_xcode_documents_dir
 
 - name: Install Xcode Simulators
   include: xcode-simulators.yml
-  when: configure_xcode
+  when: configure_xcode_documents_dir
 
 - name: Install Xcode Command Line Tools
   include: macos-commandline-tools.yml
