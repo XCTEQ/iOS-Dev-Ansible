@@ -1,5 +1,5 @@
 
-[![CI Status](http://img.shields.io/travis/Shashikant86/ansible-ios-ci.svg?style=flat)](https://travis-ci.org/Shashikant86/ansible-ios-ci)
+[![CI Status](http://img.shields.io/travis/Shashikant86/iOS-Dev-Ansible.svg?style=flat)](https://travis-ci.org/Shashikant86/iOS-Dev-Ansible)
 
 Ansible Provisioning of iOS Development & Continuous Integration
 =========
@@ -153,7 +153,7 @@ Assuming you have installed Ansible, we can download the role by running command
 
            $ $ ansible-galaxy install Shashikant86.iOS-Dev
 
-Now that, we have to create our own playbook for this role by setting values in the `config.yml` files. We can use `defaults/main.tml` file [here](https://github.com/Shashikant86/ansible-ios-ci/blob/master/defaults/main.yml) then we can create a playbook to use this file as configuration. The example playbook looks like this
+Now that, we have to create our own playbook for this role by setting values in the `config.yml` files. We can use `defaults/main.tml` file [here](https://github.com/Shashikant86/iOS-Dev-Ansible/blob/master/defaults/main.yml) then we can create a playbook to use this file as configuration. The example playbook looks like this
 
 
 
@@ -191,7 +191,7 @@ You don't need to create `config.yml` file if you can use all the variable insid
 Setting up Continuous Intrgration with Travis
 ------------
 
-We can test this role on TravisCI by disabling the Xcode config as TravisCI has it's own Xcode images. We can test all other things on TravisCI. You can see the TravisCI config in the `.travis.yml` and playbook/config inside the `tests` directory. You can see TravisCI output [here](https://travis-ci.org/Shashikant86/ansible-ios-ci/builds/203048714)
+We can test this role on TravisCI by disabling the Xcode config as TravisCI has it's own Xcode images. We can test all other things on TravisCI. You can see the TravisCI config in the `.travis.yml` and playbook/config inside the `tests` directory. You can see TravisCI output [here](https://travis-ci.org/Shashikant86/iOS-Dev-Ansible/builds/203170430)
 
 
 Dependencies
