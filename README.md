@@ -28,8 +28,7 @@ There are three ways this role can install Xcode, you can pick one that is suita
 * Xcode XIP/DMG in `files` directory of playbook
 
 You should place a `dmg` or `xip` in the `files/` directory of your playbook
-for this role to pick it up and transfer it over. You must turn set the variables `configure_xcode_playbook_files` to `yes` enable this mode. There are couple of variables, we can use to use this approach
-We can use `xcode_major_version` to specify exact version of the Xcode we are using and `xcode_src` file name of Xcode DMG/XIP to copy over to other machines. The example will look like this:
+for this role to pick it up and transfer it over. You must turn set the variables `configure_xcode_playbook_files` to `yes` enable this mode. There are couple of variables, we can use to use this approach. We can use `xcode_major_version` to specify exact version of the Xcode we are using and `xcode_src` file name of Xcode DMG/XIP to copy over to other machines. The example will look like this:
 
 ```
 configure_xcode_playbook_files: yes
@@ -42,10 +41,12 @@ This allows us to install a specific version (good for CI stability) and avoids
 the role dealing with authenticating with the Apple Developer Portal.
 
 * Download Xcode XIP and Place it inside `~/Documents` Xcode 8 +
+
 This approach is suitable for provisioning few macOS machine but it doesn't scale and only work with XIP files (Xcode 8+). We have to copy Xcode XIP to `~/Documents/` directory to each server. Downloading Xcode needs Apple Developer account and it's hard to automate Xcode Installation process. You need to have Xcode XIP file downloaded from Apple developer portal. **You must put it inside `~/Documents/` directory.** The variables, we can have to set to enable this mode,  
 
 ```
 configure_xcode_documents_dir: no
+```
 
 It's not ideal but Xcode is proprietary software so only requirement is to put `xcode.xip` it inside `~/Documents/` directory.
 
@@ -62,6 +63,7 @@ mas_installed_apps:
   - { id: 497799835, name: "Xcode (8.1)" }
 
 mas_upgrade_all_apps: no
+
 ```
 
 You can choose one of the above approach to install Xcode but It's recommended to use first approach 'Xcode XIP/DMG in `files` directory of playbook'.  
@@ -118,6 +120,7 @@ mas_installed_apps:
   - { id: 497799835, name: "Xcode (8.1)" }
 
 mas_upgrade_all_apps: no
+
 ```
 
 
@@ -137,6 +140,7 @@ You can turn **ON** or **OFF** the macOS defaults defaults by putting commands i
 macos_sleep_options:
   - systemsetup -setsleep Never
   - systemsetup -setharddisksleep Never
+
 ```
 ### Homebrew Related Varibales
 
@@ -154,9 +158,6 @@ Assuming you have installed Ansible, we can download the role by running command
            $ $ ansible-galaxy install Shashikant86.iOS-Dev
 
 Now that, we have to create our own playbook for this role by setting values in the `config.yml` files. We can use `defaults/main.tml` file [here](https://github.com/Shashikant86/iOS-Dev-Ansible/blob/master/defaults/main.yml) then we can create a playbook to use this file as configuration. The example playbook looks like this
-
-
-
 
 
 Example Playbook
