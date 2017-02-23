@@ -2,6 +2,7 @@
 
 configure_xcode_documents_dir: no
 configure_xcode_playbook_files: no
+configure_additional_simulators: no
 configure_custom_swift: yes
 configure_masos_defaults: no
 configure_ruby_rvm: yes
@@ -12,6 +13,13 @@ xcode_major_version: 8.2
 xcode_src: Xcode_8.2.xip
 
 ruby_version: 2.4.0
+
+rubygems_packages:
+  - bundler
+  - rake
+  - cocoapods
+  - fastlane
+  - xcpretty
 
 swift_version_custom: 3.0.1
 

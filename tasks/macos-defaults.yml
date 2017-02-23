@@ -1,12 +1,8 @@
 ---
-- name: Enable Developer Tools and Never Sleep Mode
+- name: Enable Developer Tools 
   shell: "{{ item }}"
   with_items:
     - DevToolsSecurity -enable
-    - systemsetup -setsleep Never
-    - systemsetup -setharddisksleep Never
-    - systemsetup -setcomputersleep Never
-    - systemsetup -setdisplaysleep Never
   changed_when: false
 
 - name: Setup macOS Sleep Mode

@@ -1,10 +1,10 @@
 ---
 - name: test whether xcode was uploaded earlier
-  stat: path=/Users/{{ ansible_ssh_user }}/{{ xcode_src }}
+  stat: path=/Users/{{ ansible_user }}/{{ xcode_src }}
   register: xcode_dl_path
 
 - name: upload xcode
-  copy: src={{ xcode_src }} dest=/Users/{{ ansible_ssh_user }}
+  copy: src={{ xcode_src }} dest=/Users/{{ ansible_user }}
   when: xcode_dl_path.stat.exists == False
 
 - name: check that the xcode archive is valid
@@ -12,7 +12,7 @@
 
 - name: extract the xcode archive in place
   extract_xip:
-    src: "/Users/{{ ansible_ssh_user }}/{{ xcode_src }}"
+    src: "/Users/{{ ansible_user }}/{{ xcode_src }}"
     dest: "/Applications"
   become: yes
 

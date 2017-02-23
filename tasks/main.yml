@@ -19,7 +19,7 @@
 
 - name: Install Xcode Simulators
   include: xcode-simulators.yml
-  when: configure_xcode_documents_dir
+  when: configure_additional_simulators
 
 - name: Install Xcode Command Line Tools
   include: macos-commandline-tools.yml

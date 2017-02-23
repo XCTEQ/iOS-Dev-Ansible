@@ -15,6 +15,13 @@ homebrew_install_path: /usr/local/homebrew
 
 ruby_version: 2.4.0
 
+rubygems_packages:
+  - bundler
+  - rake
+  - cocoapods
+  - fastlane
+  - xcpretty
+
 swift_version_custom: 3.0.1
 
 macos_sleep_options:

@@ -36,4 +36,4 @@ install_simulator() {
       /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ $1.simruntime
 }
 
-install_simulator '9.2' '9_2-9.2.1.1451951473.dmg'
+install_simulator $1 $2
