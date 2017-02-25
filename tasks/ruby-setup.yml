@@ -1,19 +1,37 @@
 ---
+- name: Check if RVM already Installed
+  stat: path=~/.rvm/
+  register: rvm_dir
+
+- name: Install GPG key for RVM
+  command: bash -c "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3"
+  when: rvm_dir.stat.exists == False
+
 - name: Install RVM for the user
   command: bash -c "\curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles"
+  when: rvm_dir.stat.exists == False
 
 - name: Add RVM to the users bash profile
   command: bash -c 'echo "source $HOME/.rvm/scripts/rvm" >> ~/.bash_profile'
+  when: rvm_dir.stat.exists == False
+
+- name: Add RVM to profile
+  command: bash -c "~/.rvm/bin/rvm get stable --auto-dotfiles"
+  when: rvm_dir.stat.exists == False
 
 - name: Install ruby version
-  command: rvm install {{ ruby_version }}
+  command: bash -c "~/.rvm/bin/rvm install {{ ruby_version }}"
+  when: rvm_dir.stat.exists == False
 
 - name: Set Ruby Default
-  command: rvm default {{ ruby_version }}
+  command: bash -c "~/.rvm/bin/rvm default {{ ruby_version }}"
+  when: rvm_dir.stat.exists == False
 
 - name: Setup Installed Ruby
   command: bash -c 'echo "rvm default {{ ruby_version }} " >> ~/.bash_profile'
+  when: rvm_dir.stat.exists == False
 
 - name: Install Ruby Gems required for iOS app developement
   gem: name={{item}} state=latest
-  with_items: "{{ rubygems_packages }}"
+  with_items: "{{ rubygems_packages_to_install }}"
+  when: rvm_dir.stat.exists == False
