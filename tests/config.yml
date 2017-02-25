@@ -1,7 +1,6 @@
 ---
 
-configure_xcode_documents_dir: no
-configure_xcode_playbook_files: no
+configure_xcode: no
 configure_custom_swift: yes
 configure_masos_defaults: yes
 configure_ruby_rvm: yes
