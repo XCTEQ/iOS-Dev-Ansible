@@ -1,29 +1,19 @@
 ---
-
-configure_xcode_documents_dir: no
-configure_xcode_playbook_files: no
-configure_additional_simulators: no
+configure_xcode: yes
 configure_custom_swift: yes
-configure_masos_defaults: no
+configure_macos_defaults: yes
 configure_ruby_rvm: yes
 homebrew_upgrade_all_packages: no
 use_mac_store: no
 
-xcode_major_version: 8.2
-xcode_src: Xcode_8.2.xip
+xcode_src: Xcode_8.2.1.xip
 
-ruby_version: 2.4.0
-
-rubygems_packages:
+ruby_version: 2.3.0
+rubygems_packages_to_install:
   - bundler
-  - rake
-  - cocoapods
-  - fastlane
   - xcpretty
 
 swift_version_custom: 3.0.1
-
-homebrew_install_path: /usr/local/homebrew
 
 macos_sleep_options:
   - systemsetup -setsleep Never
@@ -39,11 +29,14 @@ macos_animation_options:
 macos_software_autoupdates:
   - softwareupdate --schedule off
 
-
 homebrew_use_brewfile: true
 homebrew_brewfile_dir: '~'
+homebrew_repo: https://github.com/Homebrew/brew
+homebrew_prefix: /usr/local
+homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
+homebrew_brew_bin_path: /usr/local/bin
 
-list_homebrew_packages_to_install:
+homebrew_installed_packages:
   - autoconf
   - bash-completion
   - git
