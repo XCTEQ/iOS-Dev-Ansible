@@ -26,4 +26,4 @@
 
 - name: Run macOS Tasks
   include: macos-defaults.yml
-  when: configure_masos_defaults
+  when: configure_macos_defaults
