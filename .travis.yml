@@ -7,6 +7,7 @@ before_install:
   - rm -rf /usr/local/Homebrew
   - rm -rf /usr/local/Caskroom
   - rm -rf /usr/local/bin/brew
+  - rm -rf $HOME/.rvm $HOME/.rvmrc /etc/rvmrc /etc/profile.d/rvm.sh /usr/local/rvm /usr/local/bin/rvm
 
 install:
   # Install pip.
@@ -28,8 +29,8 @@ install:
 script:
   # Basic role syntax check
   - ansible-galaxy install Shashikant86.iOS-Dev
-  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
-  - ansible-playbook -v tests/test.yml -i tests/inventory -K
+  - ansible-playbook tests/test.yml --syntax-check
+  - ansible-playbook -v tests/test.yml -K
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
