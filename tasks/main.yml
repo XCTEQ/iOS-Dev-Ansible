@@ -3,7 +3,7 @@
   include: ansible.yml
 
 - name: Install Xcode by Placing DMG/XIP inside files dorectoty
-  include: xcode_8.yml"
+  include: xcode_8.yml
   when: configure_xcode
 
 - name: Install Xcode Command Line Tools
