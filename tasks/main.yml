@@ -10,7 +10,7 @@
   when: use_mac_store
 
 - name: Install Xcode by Placing DMG/XIP inside files dorectoty
-  include: "xcode_{{ xcode_major_version }}.yml"
+  include: xcode_8.yml"
   when: configure_xcode_playbook_files
 
 - name: Install Xcode from ~/Documents directory
