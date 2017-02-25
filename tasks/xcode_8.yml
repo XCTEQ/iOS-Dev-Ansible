@@ -1,34 +1,63 @@
 ---
+- name: Check if Xcode is already installed
+  stat: path=/Library/Developer/Xcode/
+  register: xcode_dir
+
 - name: test whether xcode was uploaded earlier
-  stat: path=/Users/{{ ansible_user }}/{{ xcode_src }}
+  stat: path=~/{{ xcode_src }}
   register: xcode_dl_path
 
 - name: upload xcode
-  copy: src={{ xcode_src }} dest=/Users/{{ ansible_user }}
+  copy: src={{ xcode_src }} dest=~/
   when: xcode_dl_path.stat.exists == False
 
 - name: check that the xcode archive is valid
-  command: "pkgutil --check-signature {{ xcode_src }} | grep \"Status: signed Apple Software\""
+  command: "pkgutil --check-signature ~/{{ xcode_src }} | grep \"Status: signed Apple Software\""
+  when: xcode_dir.stat.exists == False
 
-- name: extract the xcode archive in place
-  extract_xip:
-    src: "/Users/{{ ansible_user }}/{{ xcode_src }}"
-    dest: "/Applications"
-  become: yes
+- name: Install Xcode from XIP file Location
+  command: bash -c 'open -FWga "Archive Utility" --args ~/{{ xcode_src }}'
+  when: xcode_dir.stat.exists == False
+
+- name: Move Xcode To Application
+  command: bash -c 'mv ~/Xcode*.app /Applications/'
+  when: xcode_dir.stat.exists == False
+
+# Not Tested
+# - name: extract the xcode archive in place
+#   extract_xip:
+#     src: "{{ xcode_src }}"
+#     dest: "/Applications"
+#   become: yes
 
 - name: accept license agreement
   command: /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -license accept
   become: yes
   become_method: sudo
+  when: xcode_dir.stat.exists == False
 
-- name: install additional xcode components
-  command: installer -pkg /Applications/Xcode.app/Contents/Resources/Packages/XcodeSystemResources.pkg -target /
+- name: install mobile device package
+  command: installer -pkg /Applications/Xcode.app/Contents/Resources/Packages//MobileDevice.pkg -target /
   become: yes
+  become_method: sudo
+  when: xcode_dir.stat.exists == False
 
 - name: install mobile device development package
   command: installer -pkg /Applications/Xcode.app/Contents/Resources/Packages/MobileDeviceDevelopment.pkg -target /
   become: yes
   become_method: sudo
+  when: xcode_dir.stat.exists == False
+
+- name: install Xcode System Resources package
+  command: installer -pkg /Applications/Xcode.app/Contents/Resources/Packages/XcodeSystemResources.pkg -target /
+  become: yes
+  become_method: sudo
+  when: xcode_dir.stat.exists == False
+
+- name: install additional xcode components
+  command: installer -pkg /Applications/Xcode.app/Contents/Resources/Packages/XcodeSystemResources.pkg -target /
+  become: yes
+  when: xcode_dir.stat.exists == False
 
 - name: check on the status of developer mode
   command: DevToolsSecurity -status
@@ -36,8 +65,11 @@
   become_method: sudo
   register: dev_tools_security_status
 
+
 - name: enable developer mode
   command: DevToolsSecurity -enable
   become: yes
   become_method: sudo
-  when: "'disabled' in dev_tools_security_status.stdout"
+  when:
+    - "'disabled' in dev_tools_security_status.stdout"
+    - xcode_dir.stat.exists == False
