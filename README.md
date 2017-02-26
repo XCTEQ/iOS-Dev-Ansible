@@ -4,7 +4,7 @@
 Ansible Provisioning of iOS Development & Continuous Integration
 =========
 
-This role can be used to setup iOS Continuous Integration Service on macOS. This role also canbe used for the setting up local development environment for the iOS Developer. It has all the tools required for the iOS Developers like Xcode, Swift Fastlane, Carthage, Cocoapods and lot's of homebrew packages, however you can have full control to configure your own environment with variables.  Xcode installation needs pre-downloaded XIP file but installing simulators and command line tools has been automated by this role. This role is fully tested for
+This role can be used to setup iOS Continuous Integration Service on macOS. This role also can be used for the setting up local development environment for the iOS Developer. It has all the tools required for the iOS Developers like Xcode, Swift Fastlane, Carthage, Cocoapods and lot's of homebrew packages, however you can have full control to configure your own environment with variables.  Xcode installation needs pre-downloaded XIP file but installing simulators and command line tools has been automated by this role. This role is fully tested for
 
 * macOS Seirra
 * Xcode 8.0.2
@@ -23,7 +23,7 @@ Ansible is python library so we can install using pip
 
 ### Xcode Setup Requirements
 
-There are three ways this role can install Xcode, you can pick one that is suitable for you  
+There are couple of ways this role can install Xcode, you can pick one that is suitable for you  
 
 * Xcode XIP/DMG in `files` directory of playbook
 
@@ -39,16 +39,6 @@ xcode_src: Xcode_8.2.xip
 
 This allows us to install a specific version (good for CI stability) and avoids
 the role dealing with authenticating with the Apple Developer Portal.
-
-* Download Xcode XIP and Place it inside `~/Documents` Xcode 8 +
-
-This approach is suitable for provisioning few macOS machine but it doesn't scale and only work with XIP files (Xcode 8+). We have to copy Xcode XIP to `~/Documents/` directory to each server. Downloading Xcode needs Apple Developer account and it's hard to automate Xcode Installation process. You need to have Xcode XIP file downloaded from Apple developer portal. **You must put it inside `~/Documents/` directory.** The variables, we can have to set to enable this mode,  
-
-```
-configure_xcode_documents_dir: no
-```
-
-It's not ideal but Xcode is proprietary software so only requirement is to put `xcode.xip` it inside `~/Documents/` directory.
 
 *  Download Xcode from Apple App Store using MAS CLI
 
@@ -78,7 +68,7 @@ This role comes with following softwares packages to provision iOS Continuous In
 * iOS Continuous Delivery tools i.e Fastlane tools
 * macOS defaults : Controls defaults and Software Updates
 * Homebrew : Package Manager for macOS
-* Homebrew packages like git, carthage, swiftlint, mas, cmake, rbenv, curl, wget etc etc
+* Homebrew packages like git, carthage, swiftlint, mas, cmake, RVM, curl, wget etc etc
 * Homebrew Cask packages
 * RVM and customised Ruby versions
 * Pre-installed Gems like bundler, Fastlane, Cocoapods, Xcpretty
@@ -91,7 +81,7 @@ You can customise your own playbook to override defaults and create your own pla
 Role Variables:
 ----------------
 
-This role has lot of variables which can be used to configure your own playbook. Please refer `defaults/main.yml` for list of all variables. ** You can override `defaults/main.yml` variables to configure your own **. The main variables are :
+This role has lot of variables which can be used to configure your own playbook. Please refer `defaults/main.yml` for list of all variables. **You can override `defaults/main.yml` variables to configure your own**. The main variables are :
 
 ### Xcode Related Variables
 
@@ -157,36 +147,73 @@ Assuming you have installed Ansible, we can download the role by running command
 
            $ $ ansible-galaxy install Shashikant86.iOS-Dev
 
-Now that, we have to create our own playbook for this role by setting values in the `config.yml` files. We can use `defaults/main.tml` file [here](https://github.com/Shashikant86/iOS-Dev-Ansible/blob/master/defaults/main.yml) then we can create a playbook to use this file as configuration. The example playbook looks like this
+Now that, we have to create our own playbook for this role by setting variables,  We can use `defaults/main.tml` file [here](https://github.com/Shashikant86/iOS-Dev-Ansible/blob/master/defaults/main.yml). The example playbook looks like this
 
 
 Example Playbook
 ----------------
 
-Assuming that we have `config.yml` file at the same location as `playbook.yml` file. We can created `playbook.yml` like this
+We can created `playbook.yml` like this
 
 ```
 ---
-- hosts: all
+- hosts: localhost
   connection: local
   remote_user: root
 
-  vars_files:
-    - config.yml
+  vars:
+    configure_xcode: no
+    configure_custom_swift: yes
+    configure_macos_defaults: no
+    configure_ruby_rvm: yes
+    homebrew_upgrade_all_packages: no
+    use_mac_store: no
 
-  pre_tasks:
-    - include_vars: "{{ item }}"
-      with_fileglob:
-        - ../config.yml
+
+    xcode_src: Xcode_8.2.1.xip
+
+    ruby_version: 2.4.0
+    rubygems_packages_to_install:
+      - bundler
+      - xcpretty
+
+    swift_version_custom: 3.0.1
+
+    homebrew_installed_packages:
+      - autoconf
+      - bash-completion
+      - git
+      - carthage
+      - gpg
+      - boost
+      - cmake
+      - ssh-copy-id
+      - openssl
+      - wget
+      - curl
+      - argon/mas/mas
+      - kylef/formulae/swiftenv
+
+    homebrew_taps:
+      - homebrew/core
+      - caskroom/cask
+      - homebrew/binary
+      - homebrew/dupes
+      - homebrew/versions
+
+
+    homebrew_cask_apps:
+      - java
 
   roles:
     - Shashikant86.iOS-Dev
+
 
 ```
 
 Please refer playbook/config inside the `tests` directory as an example.
 
-You don't need to create `config.yml` file if you can use all the variable inside the `playbook.yml`. This might cause playbook file became too lenthy.
+You can create `config.yml` an call this from playbook file if you want to keep variables out of playbook file
 
 
 Setting up Continuous Intrgration with Travis
