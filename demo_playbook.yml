@@ -1,0 +1,90 @@
+---
+- hosts: localhost
+  connection: local
+
+  vars:
+    configure_xcode: yes
+    configure_custom_swift: yes
+    configure_macos_defaults: no
+    configure_ruby_rvm: yes
+    homebrew_upgrade_all_packages: no
+    use_mac_store: no
+
+    xcode_src: Xcode_8.2.1.xip
+
+    ruby_version: 2.4.0
+    rubygems_packages_to_install:
+      - bundler
+      - xcpretty
+
+    swift_version_custom: 3.0.1
+
+
+    macos_sleep_options:
+      - systemsetup -setsleep Never
+      - systemsetup -setharddisksleep Never
+      - systemsetup -setcomputersleep Never
+
+    macos_animation_options:
+      - defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
+      - defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
+      - defaults write com.apple.dock expose-animation-duration -int 0
+      - defaults write com.apple.dock launchanim -bool false
+
+    macos_software_autoupdates:
+      - softwareupdate --schedule off
+
+
+    homebrew_use_brewfile: true
+    homebrew_brewfile_dir: '~'
+    homebrew_repo: https://github.com/Homebrew/brew
+    homebrew_prefix: /usr/local
+    homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
+    homebrew_brew_bin_path: /usr/local/bin
+
+
+    homebrew_installed_packages:
+      - autoconf
+      - bash-completion
+      - git
+      - carthage
+      - gpg
+      - boost
+      - cmake
+      - ssh-copy-id
+      - openssl
+      - wget
+      - curl
+      - argon/mas/mas
+      - kylef/formulae/swiftenv
+
+    homebrew_taps:
+      - homebrew/core
+      - caskroom/cask
+      - homebrew/binary
+      - homebrew/dupes
+      - homebrew/versions
+
+    homebrew_cask_appdir: /Applications
+
+    homebrew_cask_apps:
+      - java
+
+
+  tasks:
+    - include: tasks/ansible.yml
+
+    - include: tasks/xcode_8.yml
+      when: configure_xcode
+
+    - include: tasks/macos-commandline-tools.yml
+    - include: tasks/homebrew.yml
+
+    - include: tasks/ruby-setup.yml
+      when: configure_ruby_rvm
+
+    - include: tasks/swift-setup.yml
+      when: configure_custom_swift
+
+    - include: tasks/macos-defaults.yml
+      when: configure_macos_defaults
