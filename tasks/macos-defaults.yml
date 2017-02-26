@@ -1,10 +1,4 @@
 ---
-- name: Enable Developer Tools 
-  shell: "{{ item }}"
-  with_items:
-    - DevToolsSecurity -enable
-  changed_when: false
-
 - name: Setup macOS Sleep Mode
   shell: "{{ item }}"
   with_items: "{{ macos_sleep_options }}"
